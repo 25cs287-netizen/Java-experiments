@@ -1,39 +1,46 @@
 class Payment {
 
     void makePayment(double amount) {
-        System.out.println("Payment Amount: " + amount);
+        System.out.println("Payment of Rs." + amount + " made using Payment.");
     }
 
-    void makePayment(double amount, String cardNumber) {
-        System.out.println("Payment Amount: " + amount);
-        System.out.println("Card Number: " + cardNumber);
+    void makePayment(double amount, String method) {
+        System.out.println("Payment of Rs." + amount +
+                           " made using " + method + ".");
     }
 
-    void makePayment(String upiId, double amount) {
-        System.out.println("UPI ID: " + upiId);
-        System.out.println("Payment Amount: " + amount);
+    void makePayment(double amount, String method, String transactionId) {
+        System.out.println("Payment of Rs." + amount +
+                           " made using " + method + ".");
+        System.out.println("Transaction ID: " + transactionId);
     }
 }
 
 class UPIPayment extends Payment {
-
+    
     void makePayment(double amount) {
-        System.out.println("UPI Payment Amount: " + amount);
-        System.out.println("Payment successful using UPI.");
+        System.out.println("Payment of Rs." + amount +
+                           " made using UPI.");
     }
 }
 
 public class Main {
+
     public static void main(String[] args) {
 
-        UPIPayment payment = new UPIPayment();
+        UPIPayment upi = new UPIPayment();
 
-        System.out.println("Overloaded Methods:");
-        payment.makePayment(1000.0, "1234567890");
-        payment.makePayment("uvan@upi", 1500.0);
+        System.out.println("----- Compile Time Polymorphism -----");
 
-        // Runtime polymorphism - overridden method
-        System.out.println("\nOverridden Method:");
-        payment.makePayment(2000.0);
+        upi.makePayment(500);
+        upi.makePayment(1000, "UPI");
+        upi.makePayment(1500, "UPI", "TXN12345");
+
+        System.out.println();
+
+        System.out.println("----- Run Time Polymorphism -----");
+
+        Payment payment = new UPIPayment();
+        payment.makePayment(2000);
     }
 }
